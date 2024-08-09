@@ -1,0 +1,4 @@
+{
+  "quick-action-lock": "Please lock your device before changing the 'Toggle lock on tile click' setting",
+  "quick-action-unsupported": "The setting 'Toggle lock on tile click' is not supported on Homey Pro (2016-2019)."
+}

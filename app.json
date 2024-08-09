@@ -1,0 +1,842 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "com.danalock",
+  "name": {
+    "en": "Danalock"
+  },
+  "version": "3.3.3",
+  "sdk": 3,
+  "compatibility": ">=7.4.0",
+  "brandColor": "#A2C517",
+  "author": {
+    "name": "Danalock ApS"
+  },
+  "support": "mailto:homey-danalock@drenso.nl",
+  "contributors": {
+    "developers": [
+      {
+        "name": "Marco Ruiter",
+        "email": "mruiter@tuxweb.nl"
+      }
+    ]
+  },
+  "platforms": [
+    "local",
+    "cloud"
+  ],
+  "category": [
+    "security"
+  ],
+  "description": {
+    "en": "The Smart Home Enabler"
+  },
+  "images": {
+    "xlarge": "/assets/images/xlarge.png",
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  },
+  "flow": {
+    "triggers": [
+      {
+        "id": "locked_false",
+        "title": {
+          "en": "Unlocked",
+          "nl": "Ontgrendeld",
+          "de": "Entriegelt",
+          "fr": "Déverrouillé",
+          "it": "Aperta",
+          "sv": "Olåst",
+          "no": "Ulåst",
+          "es": "Abierto",
+          "da": "Låst op",
+          "ru": "Открыто",
+          "pl": "Odblokowane"
+        },
+        "tokens": [
+          {
+            "name": "source",
+            "type": "string",
+            "title": {
+              "en": "Source"
+            },
+            "example": {
+              "en": "Keypad, ID 3"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=danalock_v2|danalock_v3|danalock_v3_zigbee"
+          }
+        ]
+      },
+      {
+        "id": "locked_true",
+        "title": {
+          "en": "Locked",
+          "nl": "Vergrendeld",
+          "de": "Verriegelt",
+          "fr": "Verrouillé",
+          "it": "Chiusa",
+          "sv": "Låst",
+          "no": "Låst",
+          "es": "Cerrado",
+          "da": "Låst",
+          "ru": "Закрыто",
+          "pl": "Zablokowane"
+        },
+        "tokens": [
+          {
+            "name": "source",
+            "type": "string",
+            "title": {
+              "en": "Source"
+            },
+            "example": {
+              "en": "Keypad, ID 3"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=danalock_v2|danalock_v3|danalock_v3_zigbee"
+          }
+        ]
+      },
+      {
+        "id": "lockJammed",
+        "title": {
+          "en": "The lock is jammed",
+          "nl": "Het slot is geblokkeerd"
+        },
+        "hint": {
+          "en": "While trying to close the lock something obstructed the lock from closing completely.",
+          "nl": "Tijdens het sluiten van het slot blokkeerde er iets waardoor het slot niet kon worden gesloten."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "title": {
+              "en": "Device"
+            },
+            "filter": "driver_id=danalock_v2|danalock_v3"
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "title": {
+          "en": "Delete PIN"
+        },
+        "titleFormatted": {
+          "en": "Delete PIN [[ID]]"
+        },
+        "args": [
+          {
+            "name": "ID",
+            "type": "number",
+            "title": {
+              "en": "ID"
+            },
+            "placeholder": {
+              "en": "0-19"
+            },
+            "min": 0,
+            "max": 19
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "title": {
+              "en": "Device"
+            },
+            "filter": "driver_id=danalock_v2|danalock_v3|danalock_v3_zigbee"
+          }
+        ],
+        "id": "deletePin"
+      },
+      {
+        "title": {
+          "en": "Set PIN"
+        },
+        "titleFormatted": {
+          "en": "Set PIN [[ID]]: [[pin]]"
+        },
+        "args": [
+          {
+            "name": "pin",
+            "type": "text",
+            "title": {
+              "en": "PIN code"
+            },
+            "placeholder": {
+              "en": "4-10 digits"
+            }
+          },
+          {
+            "name": "ID",
+            "type": "number",
+            "title": {
+              "en": "ID"
+            },
+            "placeholder": {
+              "en": "0-19"
+            },
+            "min": 0,
+            "max": 19
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "title": {
+              "en": "Device"
+            },
+            "filter": "driver_id=danalock_v2|danalock_v3|danalock_v3_zigbee"
+          }
+        ],
+        "id": "setPin"
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "images": {
+        "large": "/drivers/danalock_v2/assets/images/large.jpg",
+        "small": "/drivers/danalock_v2/assets/images/small.jpg"
+      },
+      "icon": "/drivers/danalock_v2/assets/icon.svg",
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "zwave"
+      ],
+      "capabilities": [
+        "locked",
+        "measure_battery",
+        "measure_battery.danapad"
+      ],
+      "name": {
+        "en": "Danalock V2",
+        "nl": "Danalock V2"
+      },
+      "class": "lock",
+      "capabilitiesOptions": {
+        "locked": {
+          "uiQuickAction": false
+        },
+        "measure_battery.danapad": {
+          "title": {
+            "en": "Danapad battery"
+          }
+        }
+      },
+      "energy": {
+        "batteries": [
+          "CR123A",
+          "CR123A",
+          "CR123A",
+          "CR123A"
+        ]
+      },
+      "zwave": {
+        "manufacturerId": 270,
+        "productTypeId": 8,
+        "productId": 2,
+        "requireSecure": true,
+        "associationGroups": [
+          1
+        ],
+        "associationGroupsOptions": {
+          "1": {
+            "hint": {
+              "en": "Z-Wave Plus Lifeline",
+              "nl": "Z-Wave Plus Lifeline"
+            }
+          }
+        },
+        "defaultConfiguration": [
+          {
+            "id": 12,
+            "size": 1,
+            "value": 1
+          }
+        ],
+        "productDocumentation": "https://products.z-wavealliance.org/ProductManual/File?folder=&filename=Manuals/1769/Danalock_V2_Product_manual_Z_Wave_V_1.0.3.pdf",
+        "pid": 1769,
+        "imageRemotePath": "https://products.z-wavealliance.org/ProductImages/Index?productName=ZC10-16055061",
+        "learnmode": {
+          "image": "/drivers/danalock_v2/assets/learnmode.svg",
+          "instruction": {
+            "en": "If you have a Danapad, please link this with the lock first. Visit https://danalock.com/appless for instructions.\nPress and hold the pair button on the Danalock V2 until it beeps twice.",
+            "nl": "Als u een Danapad heeft, moet deze eerst met het slot verbonden worden. Kijk op https://danalock.com/appless voor instructies.\nHoud de knop op de Danalock v2 ingedrukt tot hij twee keer heeft gepiept."
+          }
+        },
+        "unlearnmode": {
+          "image": "/drivers/danalock_v2/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the pair button on the Danalock V2 until it beeps twice.",
+            "nl": "Houd de knop op de Danalock v2 ingedrukt tot hij twee keer heeft gepiept."
+          }
+        }
+      },
+      "id": "danalock_v2",
+      "settings": [
+        {
+          "id": "direction",
+          "type": "dropdown",
+          "label": {
+            "en": "Turn direction of the motor",
+            "nl": "Draairichting van de motor"
+          },
+          "zwave": {
+            "index": 1,
+            "size": 1
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "The motor turns clockwise when latched",
+                "nl": "De motor draait met de klok mee wanneer vergrendeld"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "The motor turns counterclockwise when latched",
+                "nl": "De motor draait tegen de klok in wanneer vergrendeld"
+              }
+            }
+          ]
+        },
+        {
+          "id": "speed",
+          "type": "dropdown",
+          "label": {
+            "en": "Speed (torque) of motor",
+            "nl": "Snelheid (draaimoment) van de motor"
+          },
+          "value": "4",
+          "hint": {
+            "en": "Adjust the speed (torque) of the motor",
+            "nl": "Pas de snelheid (draaimoment) van de motor aan"
+          },
+          "zwave": {
+            "index": 2,
+            "size": 1
+          },
+          "values": [
+            {
+              "id": "1",
+              "label": {
+                "en": "Slowest",
+                "nl": "Langzaamst"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "Slow",
+                "nl": "Langzaam"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "Normal",
+                "nl": "Normaal"
+              }
+            },
+            {
+              "id": "4",
+              "label": {
+                "en": "Fast",
+                "nl": "Snel"
+              }
+            },
+            {
+              "id": "5",
+              "label": {
+                "en": "Fastest",
+                "nl": "Snelst"
+              }
+            }
+          ]
+        },
+        {
+          "id": "sound",
+          "type": "checkbox",
+          "label": {
+            "en": "Enable the sound from latch or unlatch operations",
+            "nl": "Geluid bij ver-/ontgrendelen"
+          },
+          "zwave": {
+            "index": 6,
+            "size": 1
+          },
+          "value": true,
+          "hint": {
+            "en": "Sound when locking and unlocking",
+            "nl": "Geluid bij vergrendeling en ontgrendeling inschakelen"
+          }
+        },
+        {
+          "id": "battery_alarm",
+          "type": "number",
+          "label": {
+            "en": "Battery alarm threshold",
+            "nl": "Batterij alarm grenswaarde"
+          },
+          "zwave": {
+            "index": 8,
+            "size": 1
+          },
+          "value": 15,
+          "attr": {
+            "min": 0,
+            "max": 100
+          },
+          "hint": {
+            "en": "When the battery level is below this value, the device will notify the user with a beep sound after latch or unlatch.",
+            "nl": "Als de batterij onder deze waarde zakt zal het apparaat de gebruiker op de hoogte brengen d.m.v. een pieptoon bij ver-/ontgrendelen."
+          }
+        },
+        {
+          "id": "turn_go",
+          "type": "checkbox",
+          "label": {
+            "en": "Turn and go",
+            "nl": "Turn and go"
+          },
+          "zwave": {
+            "index": 9,
+            "size": 1
+          },
+          "value": false,
+          "hint": {
+            "en": "TurnAndGo on will turn automatically when manual turn is detected",
+            "nl": "TurnAndGo wordt automatisch ingeschakeld wanneer een handmatige draai wordt gedetecteerd"
+          }
+        },
+        {
+          "id": "battery_poll_interval",
+          "label": {
+            "en": "Battery poll interval",
+            "nl": "Batterij poll interval"
+          },
+          "type": "number",
+          "units": {
+            "en": "min",
+            "nl": "min"
+          },
+          "value": 360,
+          "attr": {
+            "min": 0,
+            "max": 10080
+          }
+        },
+        {
+          "id": "uiQuickAction",
+          "type": "checkbox",
+          "value": false,
+          "label": {
+            "en": "Toggle lock on tile click"
+          },
+          "hint": {
+            "en": "When enabled, the device will lock/unlock when clicking on the device tile. Use with caution, as it might cause accidental unlocks."
+          }
+        }
+      ]
+    },
+    {
+      "images": {
+        "large": "/drivers/danalock_v3/assets/images/large.jpg",
+        "small": "/drivers/danalock_v3/assets/images/small.jpg"
+      },
+      "icon": "/drivers/danalock_v3/assets/icon.svg",
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "zwave"
+      ],
+      "capabilities": [
+        "locked",
+        "measure_battery",
+        "measure_battery.danapad"
+      ],
+      "name": {
+        "en": "Danalock V3 Z-Wave",
+        "nl": "Danalock V3 Z-Wave"
+      },
+      "class": "lock",
+      "capabilitiesOptions": {
+        "locked": {
+          "uiQuickAction": false
+        },
+        "measure_battery.danapad": {
+          "title": {
+            "en": "Danapad battery"
+          }
+        }
+      },
+      "energy": {
+        "batteries": [
+          "CR123A",
+          "CR123A",
+          "CR123A",
+          "CR123A"
+        ]
+      },
+      "zwave": {
+        "manufacturerId": 270,
+        "productTypeId": 9,
+        "productId": 1,
+        "requireSecure": true,
+        "associationGroups": [
+          1
+        ],
+        "associationGroupsOptions": {
+          "1": {
+            "hint": {
+              "en": "Z-Wave Plus Lifeline",
+              "nl": "Z-Wave Plus Lifeline"
+            }
+          }
+        },
+        "productDocumentation": "https://products.z-wavealliance.org/ProductManual/File?folder=&filename=Manuals/2556/Danalock_V3_Product_manual_Z_Wave_V_0.9.1.pdf",
+        "pid": 2556,
+        "imageRemotePath": "https://products.z-wavealliance.org/ProductImages/Index?productName=ZC10-17095764",
+        "learnmode": {
+          "image": "/drivers/danalock_v3/assets/learnmode.svg",
+          "instruction": {
+            "en": "If you have a Danapad, please link this with the lock first. Visit https://danalock.com/appless for instructions.\nPress the pair button on top of the Danalock V3 with a small pin, pairing will start within 5 seconds.",
+            "nl": "Als u een Danapad heeft, moet deze eerst met het slot verbonden worden. Kijk op https://danalock.com/appless voor instructies.\nDruk met een klein pinnetje op de knop bovenop de Danalock, het apparaat zal binnen 5 seconden worden toegevoegd."
+          }
+        },
+        "unlearnmode": {
+          "image": "/drivers/danalock_v3/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press the pair button on top of the Danalock V3 with a small pin, the device will be removed within 5 seconds.",
+            "nl": "Druk met een klein pinnetje op de knop bovenop de Danalock, het apparaat zal binnen 5 seconden worden verwijderd."
+          }
+        }
+      },
+      "id": "danalock_v3",
+      "settings": [
+        {
+          "id": "hold_release",
+          "label": {
+            "en": "Hold and release",
+            "nl": "Naast ontgrendelen ook aanhouden"
+          },
+          "hint": {
+            "en": "After an unlock operation the lock holds the lock, so the door can be opened.",
+            "nl": "Na ontgrendeling extra ontsluiten zodat deur open valt."
+          },
+          "units": {
+            "en": "seconds",
+            "nl": "seconden"
+          },
+          "zwave": {
+            "index": 2,
+            "size": 4
+          },
+          "type": "number",
+          "value": 0,
+          "attr": {
+            "min": 0,
+            "max": 2147483647
+          }
+        },
+        {
+          "id": "lock_till_lock",
+          "value": false,
+          "label": {
+            "en": "Lock till lock",
+            "nl": "Vergrendel tot blokkade"
+          },
+          "hint": {
+            "en": "The lock will run the motor until it hits resistance.",
+            "nl": "Het slot laat de motor lopen totdat het tegen een blokkade aanloopt."
+          },
+          "zwave": {
+            "index": 3,
+            "size": 1
+          },
+          "type": "checkbox"
+        },
+        {
+          "id": "temp_allow_bluetooth",
+          "label": {
+            "en": "Bluetooth temporary allowed",
+            "nl": "Bluetooth tijdelijk toegestaan"
+          },
+          "hint": {
+            "en": "Enable Bluetooth for a number of seconds.",
+            "nl": "Activeer Bluetooth voor een bepaalde tijd."
+          },
+          "zwave": {
+            "index": 4,
+            "size": 4
+          },
+          "type": "number",
+          "value": 0,
+          "units": {
+            "en": "seconds",
+            "nl": "seconden"
+          },
+          "attr": {
+            "min": 0,
+            "max": 2147483647
+          }
+        },
+        {
+          "id": "always_allow_bluetooth",
+          "value": false,
+          "label": {
+            "en": "Bluetooth always allowed",
+            "nl": "Bluetooth altijd toegestaan"
+          },
+          "zwave": {
+            "index": 5,
+            "size": 1
+          },
+          "type": "checkbox"
+        },
+        {
+          "id": "auto_lock",
+          "label": {
+            "en": "Autolock",
+            "nl": "Automatische vergrendeling"
+          },
+          "hint": {
+            "en": "Auto lock after an unlock.",
+            "nl": "Vergrendel automatisch na ontgrendelen."
+          },
+          "zwave": {
+            "index": 6,
+            "size": 4
+          },
+          "type": "number",
+          "value": 0,
+          "units": {
+            "en": "seconds",
+            "nl": "seconden"
+          },
+          "attr": {
+            "min": 0,
+            "max": 2147483647
+          }
+        },
+        {
+          "id": "easy_lock",
+          "value": false,
+          "label": {
+            "en": "Easy Lock",
+            "nl": "Eenvoudige vergrendeling"
+          },
+          "hint": {
+            "en": "Lock from Danapad without entering PIN code.",
+            "nl": "Vergrendel vanaf Danapad zonder PIN in te voeren."
+          },
+          "zwave": {
+            "index": 9,
+            "size": 1
+          },
+          "type": "checkbox"
+        },
+        {
+          "id": "battery_poll_interval",
+          "label": {
+            "en": "Battery poll interval",
+            "nl": "Batterij poll interval"
+          },
+          "type": "number",
+          "units": {
+            "en": "min",
+            "nl": "min"
+          },
+          "value": 360,
+          "attr": {
+            "min": 0,
+            "max": 10080
+          }
+        },
+        {
+          "id": "uiQuickAction",
+          "type": "checkbox",
+          "value": false,
+          "label": {
+            "en": "Toggle lock on tile click"
+          },
+          "hint": {
+            "en": "When enabled, the device will lock/unlock when clicking on the device tile. Use with caution, as it might cause accidental unlocks."
+          }
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Danalock V3 Zigbee",
+        "nl": "Danalock V3 Zigbee"
+      },
+      "class": "lock",
+      "capabilities": [
+        "measure_battery",
+        "measure_battery.danapad",
+        "locked"
+      ],
+      "capabilitiesOptions": {
+        "locked": {
+          "uiQuickAction": false
+        },
+        "measure_battery.danapad": {
+          "title": {
+            "en": "Danapad battery"
+          }
+        }
+      },
+      "connectivity": [
+        "zigbee"
+      ],
+      "images": {
+        "small": "/drivers/danalock_v3_zigbee/assets/images/small.jpg",
+        "large": "/drivers/danalock_v3_zigbee/assets/images/large.jpg"
+      },
+      "energy": {
+        "batteries": [
+          "CR123A",
+          "CR123A",
+          "CR123A",
+          "CR123A"
+        ]
+      },
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "zigbee": {
+        "manufacturerName": "Danalock",
+        "productId": [
+          "V3-BTZBE",
+          "V3-BTZB"
+        ],
+        "endpoints": {
+          "1": {
+            "clusters": [
+              1,
+              9,
+              257,
+              64767
+            ],
+            "bindings": [
+              1,
+              9,
+              257
+            ]
+          }
+        },
+        "learnmode": {
+          "image": "/drivers/danalock_v3_zigbee/assets/learnmode.svg",
+          "instruction": {
+            "en": "If you have a Danapad, please link this with the lock first. Visit https://danalock.com/appless for instructions.\nPress the pair button on top of the Danalock V3 with a small pin, pairing will start within 5 seconds.\nIf it has been paired with a Zigbee network before, make sure to first reset it by clicking 9 times.",
+            "nl": "Als u een Danapad heeft, moet deze eerst met het slot verbonden worden. Kijk op https://danalock.com/appless voor instructies.\nDruk met een klein pinnetje op de knop bovenop de Danalock, het apparaat zal binnen 5 seconden worden toegevoegd.\nAls het slot al eerder met een Zigbee netwerk verbonden is geweest, reset het slot dan eerst door 9 keer te drukken."
+          }
+        }
+      },
+      "id": "danalock_v3_zigbee",
+      "settings": [
+        {
+          "id": "hold_release",
+          "label": {
+            "en": "Hold and release",
+            "nl": "Naast ontgrendelen ook aanhouden"
+          },
+          "hint": {
+            "en": "After an unlock operation the lock holds the lock, so the door can be opened.",
+            "nl": "Na ontgrendeling extra ontsluiten zodat deur open valt."
+          },
+          "units": {
+            "en": "seconds",
+            "nl": "seconden"
+          },
+          "type": "number",
+          "value": 0,
+          "attr": {
+            "min": 0,
+            "max": 2147483647
+          }
+        },
+        {
+          "id": "lock_till_lock",
+          "type": "checkbox",
+          "value": false,
+          "label": {
+            "en": "Lock till lock",
+            "nl": "Vergrendel tot blokkade"
+          },
+          "hint": {
+            "en": "The lock will run the motor until it hits resistance.",
+            "nl": "Het slot laat de motor lopen totdat het tegen een blokkade aanloopt."
+          }
+        },
+        {
+          "id": "auto_lock",
+          "label": {
+            "en": "Autolock",
+            "nl": "Automatische vergrendeling"
+          },
+          "hint": {
+            "en": "Auto lock after an unlock.",
+            "nl": "Vergrendel automatisch na ontgrendelen."
+          },
+          "type": "number",
+          "value": 0,
+          "units": {
+            "en": "seconds",
+            "nl": "seconden"
+          },
+          "attr": {
+            "min": 0,
+            "max": 2147483647
+          }
+        },
+        {
+          "id": "easy_lock",
+          "value": false,
+          "label": {
+            "en": "Easy Lock",
+            "nl": "Eenvoudige vergrendeling"
+          },
+          "hint": {
+            "en": "Lock from Danapad without entering PIN code.",
+            "nl": "Vergrendel vanaf Danapad zonder PIN in te voeren."
+          },
+          "type": "checkbox"
+        },
+        {
+          "id": "uiQuickAction",
+          "type": "checkbox",
+          "value": false,
+          "label": {
+            "en": "Toggle lock on tile click"
+          },
+          "hint": {
+            "en": "When enabled, the device will lock/unlock when clicking on the device tile. Use with caution, as it might cause accidental unlocks."
+          }
+        }
+      ]
+    }
+  ]
+}

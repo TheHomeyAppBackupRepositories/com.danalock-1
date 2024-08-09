@@ -1,0 +1,31 @@
+
+{
+  "id": "temp_allow_bluetooth",
+  "label": {
+    "en": "Bluetooth temporary allowed",
+    "nl": "Bluetooth tijdelijk toegestaan"
+  },
+  "hint": {
+    "en": "Enable Bluetooth for a number of seconds.",
+    "nl": "Activeer Bluetooth voor een bepaalde tijd."
+  },
+  "type": "number",
+  "value": 0,
+  "units": {
+    "en": "seconds",
+    "nl": "seconden"
+  },
+  "attr": {
+    "min": 0,
+    "max": 2147483647
+  }
+},
+{
+"id": "always_allow_bluetooth",
+"value": false,
+"label": {
+"en": "Bluetooth always allowed",
+"nl": "Bluetooth altijd toegestaan"
+},
+"type": "checkbox"
+},
